@@ -21,13 +21,14 @@ if %errorlevel% equ 0 (
     cd /d "C:\gitx\tradgrok"
     git add "!target!"
     
-    REM Use provided commit message or default
+    REM Always prefix with timestamped message, append custom if provided
+    set "prefix=Add timestamped Strategy.java: !timestamp!"
     if "%~1"=="" (
-        git commit -m "Add timestamped Strategy.java: !timestamp!"
-        echo Git add and commit completed with default message.
+        git commit -m "!prefix!"
+        echo Git add and commit completed with default message: !prefix!
     ) else (
-        git commit -m "%~1"
-        echo Git add and commit completed with custom message: %~1
+        git commit -m "!prefix! %~1"
+        echo Git add and commit completed with prefixed message: !prefix! %~1
     )
 ) else (
     echo Copy failed.
